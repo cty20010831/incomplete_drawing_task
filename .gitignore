@@ -1,0 +1,5 @@
+# Ignore examples from JsPsych
+jspsych/examples
+
+# (Temporarily) ignore dist from JsPsych
+jspsych/dist
