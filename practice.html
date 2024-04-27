@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title> Practice Experiment </title>
+        <!-- Load jsPsych library -->
+        <script src="jspsych/dist/jspsych.js"></script>
+        <!-- Load jsPsych plugin for HTML keyboard response -->
+        <script src="jspsych/dist/plugin-html-keyboard-response.js"></script>
+        <!-- Load jsPsych plugin for image button response -->
+        <script src="jspsych/dist/plugin-image-button-response.js"></script>
+        <!-- Load jsPsych's standard CSS file -->
+        <link href="jspsych/dist/jspsych.css" rel="stylesheet">
+    </head>
+    <body></body>
+    <!-- Define the welcome trial using jsPsych's HTML keyboard response plugin -->
+    <script>
+        // // Can also use a fir koop to create a timeline (remember to change the timeline key in .init to timeline variable)
+        // var timeline = [];
+        // var words = ['Welcom', 'to', 'my',  'experiment'];
+        // for (var i=0; i <words.length; i++){
+        //     var welcome_trial = {
+        //         type: "html-keyboard-response",
+        //         stimulus: words[i]
+        //     }
+        //     timeline.push(welcome_trial)
+        // }
+
+        var welcome_trial = {
+            type: jsPsychHtmlKeyboardResponse,
+            stimulus: "Welcome to my experiment."
+        };
+
+        var image_button_trial = {
+            type: jsPsychImageButtonResponse,
+            stimulus: 'jspsych/examples/img/happy_face_1.jpg',
+            choices: ['Happy', 'Sad']
+        }
+
+        // Initialize jsPsych experiment with the defined timeline
+        var timeline = [welcome_trial, image_button_trial]
+        
+        var jsPsych = initJsPsych({
+            on_finish: function () {
+                jsPsych.data.displayData();
+            },
+            override_safe_mode: true
+        });
+
+        /* start the experiment */
+        jsPsych.run(timeline);
+
+    </script>
+</html>
