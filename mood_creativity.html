@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title> Experiment on Mood-Creativity Linkage </title>
+        <!-- Load jsPsych library -->
+        <script src="jspsych/jspsych.js"></script>
+        <!-- Load jsPsych's standard CSS file -->
+        <link href="jspsych/jspsych.css" rel="stylesheet">
+        <!-- Load jsPsych plugin for HTML button response -->
+        <script src="jspsych/plugin-html-button-response.js"></script>
+        <!-- Load jsPsych plugin for an interactive canvas that the participant can draw on using their mouse or touchscreen -->
+        <script src="jspsych/plugin-sketchpad.js"></script>
+        <!-- Load jsPsych plugin for HTML keyboard response -->
+        <script src="jspsych/plugin-survey-text.js"></script>
+    </head>
+    <body></body>
+    <script>
+        // Initialize jsPsych experiment with the defined timeline
+        var timeline = [];
+
+        // Provide informed consent
+        var consent = {
+            type: jsPsychHtmlButtonResponse,
+            stimulus: "<p>Welcome to the experiment. <br>Please read the following consent form and click Agree to participate.</p>",
+            choices: ['Agree']
+        };
+        timeline.push(consent);
+        
+        // Complete the incompleteness shape task
+        var drawing = {
+            type: jsPsychSketchpad,
+            canvas_width: 500,
+            canvas_height: 500,
+            // background_image: 'jspsych/examples/img/happy_face_3.jpg',
+            prompt: '<p>Complete the incomplete drawing below. Use your imagniation and take your time. </p>',
+            prompt_location: 'abovecanvas',
+        };
+        timeline.push(drawing);
+
+        // Ask participants to describe what they have drawn
+        var drawing_label = {
+            type: jsPsychSurveyText,
+            preamble: () => {
+                var imageData = jsPsych.data.get().last(1).values()[0].png;
+                return `<img src="${imageData}"></img>`;
+            },
+            questions: [{prompt: 'What label would you give for your drawing?'}]
+        }
+        timeline.push(drawing_label);
+
+        // Ask the participants to describe what and how they drew
+        var drawing_narrative = {
+            type: jsPsychSurveyText,
+            questions: [
+                {
+                    prompt: "Tell us how did you approach the initial incomplete drawing and turn it into your completed piece:",
+                    rows: 6,
+                    columns: 40,
+                    name: 'narrative_response'
+                }
+            ],
+            preamble: () => {
+                var imageData = jsPsych.data.get().last(1).values()[0].png;
+                return `<img src="${imageData}"></img>`;
+            },
+            button_label: "Submit Response"
+        };
+        timeline.push(drawing_narrative);
+
+        // Complete the experiment
+        var submit = {
+            type: jsPsychHtmlButtonResponse,
+            stimulus: "Thank you for participating. Click the button to complete the experiment.",
+            choices: ['Submit']
+        };
+        timeline.push(submit);
+
+        var jsPsych = initJsPsych({
+            on_finish: function () {
+                jsPsych.data.displayData();
+            },
+            override_safe_mode: true
+        });
+
+        /* start the experiment */
+        jsPsych.run(timeline);
+
+    </script>
+</html>
