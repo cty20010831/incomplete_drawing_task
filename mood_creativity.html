@@ -9,9 +9,11 @@
         <!-- Load jsPsych plugin for HTML button response -->
         <script src="jspsych/plugin-html-button-response.js"></script>
         <!-- Load jsPsych plugin for an interactive canvas that the participant can draw on using their mouse or touchscreen -->
-        <script src="jspsych/plugin-sketchpad.js"></script>
+        <script src="jspsych/plugin-sketchpad.js"></script>*/
         <!-- Load jsPsych plugin for HTML keyboard response -->
         <script src="jspsych/plugin-survey-text.js"></script>
+        <!-- Load jsPsych plugin for video keyboard response -->
+        <script src="jspsych/plugin-video-keyboard-response.js"></script>
     </head>
     <body></body>
     <script>
@@ -25,13 +27,24 @@
             choices: ['Agree']
         };
         timeline.push(consent);
+
+        // Stream the movie used for mood induction
+        var video = {
+            type: jsPsychVideoKeyboardResponse,
+            stimulus: [
+                'jspsych/examples/video/sample_video.mp4'
+            ],
+            choices: "NO_KEYS",
+            trial_ends_after_video: true
+        };
+        timeline.push(video);
         
         // Complete the incompleteness shape task
         var drawing = {
             type: jsPsychSketchpad,
             canvas_width: 500,
             canvas_height: 500,
-            // background_image: 'jspsych/examples/img/happy_face_3.jpg',
+            background_image: 'Example Incomplete Shape.png',
             prompt: '<p>Complete the incomplete drawing below. Use your imagniation and take your time. </p>',
             prompt_location: 'abovecanvas',
         };
