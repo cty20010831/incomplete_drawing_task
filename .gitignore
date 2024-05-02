@@ -6,3 +6,9 @@ jspsych/dist
 
 # Ignore DS_Store
 .DS_Store
+
+# Ignore node_modules
+node_modules
+
+# Ignore practice html
+public/practice.html
