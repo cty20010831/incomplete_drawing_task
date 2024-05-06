@@ -9,7 +9,7 @@
         <!-- Load jsPsych plugin for HTML button response -->
         <script src="jspsych/plugin-html-button-response.js"></script>
         <!-- Load jsPsych plugin for an interactive canvas that the participant can draw on using their mouse or touchscreen -->
-        <script src="jspsych/plugin-sketchpad.js"></script>*/
+        <script src="jspsych/plugin-sketchpad.js"></script>
         <!-- Load jsPsych plugin for HTML keyboard response -->
         <script src="jspsych/plugin-survey-text.js"></script>
         <!-- Load jsPsych plugin for video keyboard response -->
@@ -49,6 +49,46 @@
             prompt_location: 'abovecanvas',
         };
         timeline.push(drawing);
+
+        // var drawing = {
+        //     type: jsPsychSketchpad,
+        //     canvas_width: 500,
+        //     canvas_height: 500,
+        //     prompt: '<p>Complete the incomplete drawing below. Use your imagination and take your time. </p>',
+        //     prompt_location: 'abovecanvas',
+        //     on_start: function(trial) {
+        //         var img = new Image();
+        //         img.onload = function() {
+        //             var ctx = document.getElementById(trial.canvas_id).getContext('2d');
+        //             ctx.drawImage(img, 0, 0, trial.canvas_width, trial.canvas_height);
+        //         };
+        //         img.crossOrigin = "Anonymous"; // Use this line only if the image is served with CORS headers
+        //         img.src = 'Example Incomplete Shape.png'; // Make sure this path is correct and the server serves images with CORS headers if needed
+        //     }
+        // };
+
+        // var drawing = {
+        //     type: jsPsychSketchpad,
+        //     canvas_width: 500,
+        //     canvas_height: 500,
+        //     prompt: '<p>Complete the incomplete drawing below. Use your imagination and take your time. </p>',
+        //     prompt_location: 'abovecanvas',
+        //     on_start: function(trial) {
+        //         fetch('/get-image-data')
+        //             .then(response => response.text())
+        //             .then(data => {
+        //                 var img = new Image();
+        //                 img.onload = function() {
+        //                     var ctx = document.getElementById(trial.canvas_id).getContext('2d');
+        //                     ctx.drawImage(img, 0, 0, trial.canvas_width, trial.canvas_height);
+        //                 };
+        //                 img.src = `data:image/png;base64,${data}`;
+        //             })
+        //             .catch(error => console.error('Error fetching image data:', error));
+        //     }
+        // };
+
+        // timeline.push(drawing);
 
         // Ask participants to describe what they have drawn
         var drawing_label = {
