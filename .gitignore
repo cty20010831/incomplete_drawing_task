@@ -1,14 +1,11 @@
 # Ignore examples from JsPsych
-jspsych/examples
+public/jspsych/examples
 
 # (Temporarily) ignore dist from JsPsych
-jspsych/dist
+public/jspsych/dist
 
 # Ignore DS_Store
 .DS_Store
-
-# Ignore node_modules
-node_modules
 
 # Ignore practice html
 public/practice.html
