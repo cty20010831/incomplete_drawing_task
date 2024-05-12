@@ -588,6 +588,7 @@ var jsPsychSketchpad = (function (jspsych) {
           trial_data.rt = Math.round(performance.now() - this.start_time);
           trial_data.response = response;
           if (this.params.save_final_image) {
+              // Save the image in base64 encoding (remember to read this from `png` key in the final output)
               trial_data.png = this.sketchpad.toDataURL();
           }
           if (this.params.save_strokes) {
