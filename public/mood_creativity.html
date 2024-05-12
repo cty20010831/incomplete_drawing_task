@@ -73,7 +73,7 @@
                 }
             ],
             preamble: () => {
-                var imageData = jsPsych.data.get().last(1).values()[0].png;
+                var imageData = jsPsych.data.get().last(2).values()[0].png;
                 return `<img src="${imageData}"></img>`;
             },
             button_label: "Submit Response"
