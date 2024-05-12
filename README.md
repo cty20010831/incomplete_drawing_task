@@ -10,7 +10,7 @@ After a participant complete the experiment, they submitted response will be ava
 The following is the **directory layout** of this repo:
 
     .
-    ├── \.github/workflows  # deploy website via Cognition.run       
+    ├── \.github/workflows               # deploy website via Cognition.run       
     ├── \public
         ├── \images                      # folder to store incomplete shapes
         ├── \jspsych                     # folder to store jspsych css and javscript files, alongside plugins used in this study
@@ -18,7 +18,7 @@ The following is the **directory layout** of this repo:
         ├── public/mood_creativity.html  # html file of the experiment webpage
     ├── .gitignore
     ├── README.md
-    ├── sample_output.json  # sample output data
+    ├── sample_output.json               # sample output data
 
 ## Points of Concern
 One imporant point of concern right row is that, despite the covenience offered by **Cognition.run**, free-account users can only upload a video with size less than 2MB. This leads to potential issues for me to upload the videos used for mood induction, which is very likely to exceed the size limit. 
