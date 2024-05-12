@@ -452,7 +452,7 @@ var jsPsychSketchpad = (function (jspsych) {
               y: y,
               color: this.current_stroke_color,
               action: "start",
-              t: Math.round(performance.now() - this.start_time),
+              t: (performance.now() - this.start_time) / 1000, // time in seconds
           });
           this.sketchpad.releasePointerCapture(e.pointerId);
       }
@@ -466,14 +466,19 @@ var jsPsychSketchpad = (function (jspsych) {
                   x: x,
                   y: y,
                   action: "move",
+                  t: (performance.now() - this.start_time) / 1000, // time in seconds
               });
           }
       }
       end_draw(e) {
           if (this.is_drawing) {
+              const x = Math.round(e.clientX - this.sketchpad.getBoundingClientRect().left);
+              const y = Math.round(e.clientY - this.sketchpad.getBoundingClientRect().top);
               this.stroke.push({
+                  x: x,
+                  y: y,
                   action: "end",
-                  t: Math.round(performance.now() - this.start_time),
+                  t: (performance.now() - this.start_time) / 1000, // time in seconds
               });
               this.strokes.push(this.stroke);
               this.set_undo_btn_state(true);
