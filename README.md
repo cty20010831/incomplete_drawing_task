@@ -19,6 +19,7 @@ The following is the **directory layout** of this repo:
     ├── .gitignore
     ├── README.md
     ├── sample_output.json               # sample output data
+    ├── sample_response.gif              # sample response using the website
 
 ## Points of Concern
 One imporant point of concern right row is that, despite the covenience offered by **Cognition.run**, free-account users can only upload a video with size less than 2MB. This leads to potential issues for me to upload the videos used for mood induction, which is very likely to exceed the size limit. 
