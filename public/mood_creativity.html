@@ -28,24 +28,6 @@
         };
         timeline.push(consent);
 
-        // Fill out some survey questions
-        var survey = {
-        type: jsPsychSurveyLikert,
-        questions: [
-            {
-            prompt: "I like vegetables.", 
-            labels: [
-                "Strongly Disagree", 
-                "Disagree", 
-                "Neutral", 
-                "Agree", 
-                "Strongly Agree"
-            ]
-            }
-        ]
-        };
-        timeline.push(survey);
-
         // Stream the movie used for mood induction
         var video = {
             type: jsPsychVideoKeyboardResponse,
@@ -113,6 +95,44 @@
             button_label: "Submit Response"
         };
         timeline.push(drawing_narrative);
+        
+        // Control variables and demographic information
+        // 1) Trait affectivity (measurede by PANAS)
+        var affectivity_likert_scale = [
+            "Very slightly or not at all", 
+            "A little", 
+            "Moderately", 
+            "Quite a bit", 
+            "Extremely"
+            ];
+
+        var affectivity = {
+            type: jsPsychSurveyLikert,
+            questions: [
+                {prompt: "Interested", name: 'Interested', labels: affectivity_likert_scale, required: true},
+                {prompt: "Distressed", name: 'Distressed', labels: affectivity_likert_scale, required: true},
+                {prompt: "Excited", name: 'Excited', labels: affectivity_likert_scale, required: true},
+                {prompt: "Upset", name: 'Upset', labels: affectivity_likert_scale, required: true},
+                {prompt: "Strong", name: 'Strong', labels: affectivity_likert_scale, required: true},
+                {prompt: "Guilty", name: 'Guilty', labels: affectivity_likert_scale, required: true},
+                {prompt: "Scared", name: 'Scared', labels: affectivity_likert_scale, required: true},
+                {prompt: "Hostile", name: 'Hostile', labels: affectivity_likert_scale, required: true},
+                {prompt: "Enthusiastic", name: 'Enthusiastic', labels: affectivity_likert_scale, required: true},
+                {prompt: "Proud", name: 'Proud', labels: affectivity_likert_scale, required: true},
+                {prompt: "Irritable", name: 'Irritable', labels: affectivity_likert_scale, required: true},
+                {prompt: "Alert", name: 'Alert', labels: affectivity_likert_scale, required: true},
+                {prompt: "Ashamed", name: 'Ashamed', labels: affectivity_likert_scale, required: true},
+                {prompt: "Inspired", name: 'Inspired', labels: affectivity_likert_scale, required: true},
+                {prompt: "Nervous", name: 'Nervous', labels: affectivity_likert_scale, required: true},
+                {prompt: "Determined", name: 'Determined', labels: affectivity_likert_scale, required: true},
+                {prompt: "Attentive", name: 'Attentive', labels: affectivity_likert_scale, required: true},
+                {prompt: "Jittery", name: 'Jittery', labels: affectivity_likert_scale, required: true},
+                {prompt: "Active", name: 'Active', labels: affectivity_likert_scale, required: true},
+                {prompt: "Afraid", name: 'Afraid', labels: affectivity_likert_scale, required: true}
+            ],
+            preamble: "<p>Indicate the extent you have felt this way over the past week.</p>"
+        }
+        timeline.push(affectivity)
 
         // Complete the experiment
         var submit = {
