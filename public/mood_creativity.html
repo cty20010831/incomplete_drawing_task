@@ -188,8 +188,8 @@
         // Control variable 4: self-rated artistic skill
         var self_rated_artistic_skill = {
             type: jsPsychHtmlButtonResponse,
-            choices: Array.from({ length: 5 }, (_, i) => i + 1).map(String),
-            prompt: "<p>Please rate your drawing skill on a scale from 1 to 5, where 1 indicates “limited skills” and 5 indicates “expert level ability.”</p><p>Consider your ability to sketch, draw perspectives, and use colors effectively in your artworks.</p>"
+            stimulus: "<p>Please rate your drawing skill on a scale from 1 to 5, where 1 indicates “limited skills” and 5 indicates “expert level ability.”</p><p>Consider your ability to sketch, draw perspectives, and use colors effectively in your artworks.</p>",
+            choices: Array.from({ length: 5 }, (_, i) => i + 1).map(String)
         }
         timeline.push(self_rated_artistic_skill)
 
@@ -228,7 +228,7 @@
             ],
         };
         
-        timeline.push([age, gender, education_level])
+        timeline.push(age, gender, education_level)
 
         // Complete the experiment
         var submit = {
