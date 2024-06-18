@@ -56,6 +56,22 @@
             trial_ends_after_video: true
         };
         timeline.push(video);
+
+        // Check mood induction (arousal and valence)
+        var arousal = {
+            type: jsPsychImageButtonResponse,
+            stimulus: 'images/SAM_Arousal.png',
+            choices: Array.from({ length: 9 }, (_, i) => i + 1).map(String),
+            prompt: "<p>On a scale from 1 to 9, with 1 being 'Not at all aroused' and 9 being 'Extremely aroused,' how would you rate your current level of arousal?</p>"
+        };
+        timeline.push(arousal)
+        
+        var valence = {
+            type: jsPsychImageButtonResponse,
+            stimulus: 'images/SAM_Valence.png',
+            choices: Array.from({ length: 9 }, (_, i) => String(i - 4)),
+            prompt: "<p>On a scale from -4 to 4, with 1 being 'Not at all aroused' and 9 being 'Extremely aroused,' how would you rate your current level of arousal?</p>"
+        };
         
         // Complete the incompleteness shape task
         var drawing = {
