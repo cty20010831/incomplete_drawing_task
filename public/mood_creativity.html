@@ -96,8 +96,8 @@
         };
         timeline.push(drawing_narrative);
         
-        // Control variables and demographic information
-        // 1) Trait affectivity (measurede by PANAS)
+        // Control variables
+        // Control variable 1: Trait affectivity (measurede by PANAS)
         var affectivity_likert_scale = [
             "Very slightly or not at all", 
             "A little", 
@@ -109,30 +109,93 @@
         var affectivity = {
             type: jsPsychSurveyLikert,
             questions: [
-                {prompt: "Interested", name: 'Interested', labels: affectivity_likert_scale, required: true},
-                {prompt: "Distressed", name: 'Distressed', labels: affectivity_likert_scale, required: true},
-                {prompt: "Excited", name: 'Excited', labels: affectivity_likert_scale, required: true},
-                {prompt: "Upset", name: 'Upset', labels: affectivity_likert_scale, required: true},
-                {prompt: "Strong", name: 'Strong', labels: affectivity_likert_scale, required: true},
-                {prompt: "Guilty", name: 'Guilty', labels: affectivity_likert_scale, required: true},
-                {prompt: "Scared", name: 'Scared', labels: affectivity_likert_scale, required: true},
-                {prompt: "Hostile", name: 'Hostile', labels: affectivity_likert_scale, required: true},
-                {prompt: "Enthusiastic", name: 'Enthusiastic', labels: affectivity_likert_scale, required: true},
-                {prompt: "Proud", name: 'Proud', labels: affectivity_likert_scale, required: true},
-                {prompt: "Irritable", name: 'Irritable', labels: affectivity_likert_scale, required: true},
-                {prompt: "Alert", name: 'Alert', labels: affectivity_likert_scale, required: true},
-                {prompt: "Ashamed", name: 'Ashamed', labels: affectivity_likert_scale, required: true},
-                {prompt: "Inspired", name: 'Inspired', labels: affectivity_likert_scale, required: true},
-                {prompt: "Nervous", name: 'Nervous', labels: affectivity_likert_scale, required: true},
-                {prompt: "Determined", name: 'Determined', labels: affectivity_likert_scale, required: true},
-                {prompt: "Attentive", name: 'Attentive', labels: affectivity_likert_scale, required: true},
-                {prompt: "Jittery", name: 'Jittery', labels: affectivity_likert_scale, required: true},
-                {prompt: "Active", name: 'Active', labels: affectivity_likert_scale, required: true},
-                {prompt: "Afraid", name: 'Afraid', labels: affectivity_likert_scale, required: true}
+                {prompt: "Interested",labels: affectivity_likert_scale, required: true},
+                {prompt: "Distressed", labels: affectivity_likert_scale, required: true},
+                {prompt: "Excited", labels: affectivity_likert_scale, required: true},
+                {prompt: "Upset", labels: affectivity_likert_scale, required: true},
+                {prompt: "Strong", labels: affectivity_likert_scale, required: true},
+                {prompt: "Guilty", labels: affectivity_likert_scale, required: true},
+                {prompt: "Scared", labels: affectivity_likert_scale, required: true},
+                {prompt: "Hostile", labels: affectivity_likert_scale, required: true},
+                {prompt: "Enthusiastic", labels: affectivity_likert_scale, required: true},
+                {prompt: "Proud", labels: affectivity_likert_scale, required: true},
+                {prompt: "Irritable", labels: affectivity_likert_scale, required: true},
+                {prompt: "Alert", labels: affectivity_likert_scale, required: true},
+                {prompt: "Ashamed", labels: affectivity_likert_scale, required: true},
+                {prompt: "Inspired", labels: affectivity_likert_scale, required: true},
+                {prompt: "Nervous", labels: affectivity_likert_scale, required: true},
+                {prompt: "Determined", labels: affectivity_likert_scale, required: true},
+                {prompt: "Attentive", labels: affectivity_likert_scale, required: true},
+                {prompt: "Jittery", labels: affectivity_likert_scale, required: true},
+                {prompt: "Active", labels: affectivity_likert_scale, required: true},
+                {prompt: "Afraid", labels: affectivity_likert_scale, required: true}
             ],
             preamble: "<p>Indicate the extent you have felt this way over the past week. </p><p>Ensure you have answered all questions on this page before clicking the 'Continue' button at the bottom of to proceed.</p>"
         }
         timeline.push(affectivity)
+
+        // Control variable 2: Openness to Experiences (measured by TIPI)
+        var openness_to_experiences_likert_scale = [
+            "Disagree strongly",
+            "Disagree moderately", 
+            "Disagree a little",
+            "Neither agree nor disagree",
+            "Agree a little",
+            "Agree moderately",
+            "Agree strongly"
+            ];
+        
+        var openness_to_experiences = {
+            type: jsPsychSurveyLikert,
+            questions: [
+                {prompt: "Open to new experiences, complex.", labels: openness_to_experiences_likert_scale, required: true},
+                {prompt: "Conventional, uncreative.", labels: openness_to_experiences_likert_scale, required: true},
+            ],
+            preamble: "<p>Please write a number below each statement to indicate the extent to which you agree or disagree with that statement.</p>"
+        }
+        timeline.push(openness_to_experiences)
+
+        // Control variable 3: Cognitive Flexibility (measured by Cognitive Flexibility Scale)
+        var cognitive_flexibility_likert_scale = [
+            "Strongly Disagree",
+            "Disagree",
+            "Slightly Disagree",
+            "Slightly Agree",
+            "Agree", 
+            "Strongly Agree" 
+            ];
+        
+        var cognitive_flexibility = {
+            type: jsPsychSurveyLikert,
+            questions: [
+                {prompt: "I can communicate an idea in many different ways.", labels: cognitive_flexibility_scale, required: true},
+                {prompt: "I avoid new and unusual situations.", labels: cognitive_flexibility_scale, required: true},
+                {prompt: "I feel like I never get to make decisions.", labels: cognitive_flexibility_scale, required: true},
+                {prompt: "I can find workable solutions to seemingly unsolvable problems.", labels: cognitive_flexibility_scale, required: true},
+                {prompt: "I seldom have choices when deciding how to behave.", labels: cognitive_flexibility_scale, required: true},
+                {prompt: "I am willing to work at creative solutions to problems.", labels: cognitive_flexibility_scale, required: true},
+                {prompt: "In any given situation, I am able to act appropriately.", labels: cognitive_flexibility_scale, required: true},
+                {prompt: "My behavior is a result of conscious decisions that I make.", labels: cognitive_flexibility_scale, required: true},
+                {prompt: "I have many possible ways of behaving in any given situation.", labels: cognitive_flexibility_scale, required: true},
+                {prompt: "I have difficulty using my knowledge on a given topic in real life situations.", labels: cognitive_flexibility_scale, required: true},
+                {prompt: "I am willing to listen and consider alternatives for handling a problem.", labels: cognitive_flexibility_scale, required: true},
+                {prompt: "I have the self-confidence necessary to try different ways of behaving.", labels: cognitive_flexibility_scale, required: true}
+            ],
+            preamble: "<p>The following statements deal with your beliefs and feelings about your own behavior. Read each statement and respond by circling the number that best represents your agreement with each statement.</p>"
+        }
+        timeline.push(cognitive_flexibility)
+
+        // Control variable 4: self-rated artistic skill
+        var self_rated_artistic_skill = {
+            type: jsPsychHtmlButtonResponse,
+            choices: Array.from({ length: 5 }, (_, i) => i + 1).map(String),
+            questions: [
+                {prompt: "<p>Please rate your drawing skill on a scale from 1 to 5, where 1 indicates “limited skills” and 5 indicates “expert level ability.”</p><p>Consider your ability to sketch, draw perspectives, and use colors effectively in your artworks.</p>"}
+            ],
+        }
+        timeline.push(self_rated_artistic_skill)
+
+        // Demographic information
 
         // Complete the experiment
         var submit = {
