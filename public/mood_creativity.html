@@ -130,7 +130,7 @@
                 {prompt: "Active", labels: affectivity_likert_scale, required: true},
                 {prompt: "Afraid", labels: affectivity_likert_scale, required: true}
             ],
-            preamble: "<p>Indicate the extent you have felt this way over the past week. </p><p>Ensure you have answered all questions on this page before clicking the 'Continue' button at the bottom of to proceed.</p>"
+            preamble: "<p>Indicate the extent you have felt this way over the past week. </p>"
         }
         timeline.push(affectivity)
 
@@ -151,7 +151,7 @@
                 {prompt: "Open to new experiences, complex.", labels: openness_to_experiences_likert_scale, required: true},
                 {prompt: "Conventional, uncreative.", labels: openness_to_experiences_likert_scale, required: true},
             ],
-            preamble: "<p>Please write a number below each statement to indicate the extent to which you agree or disagree with that statement.</p>"
+            preamble: "<p>Please indicate the extent to which you agree or disagree with that statement.</p>"
         }
         timeline.push(openness_to_experiences)
 
@@ -181,7 +181,7 @@
                 {prompt: "I am willing to listen and consider alternatives for handling a problem.", labels: cognitive_flexibility_likert_scale, required: true},
                 {prompt: "I have the self-confidence necessary to try different ways of behaving.", labels: cognitive_flexibility_likert_scale, required: true}
             ],
-            preamble: "<p>The following statements deal with your beliefs and feelings about your own behavior. Read each statement and respond by circling the number that best represents your agreement with each statement.</p>"
+            preamble: "<p>The following statements deal with your beliefs and feelings about your own behavior. Read each statement and respond by circling the option that best represents your agreement with each statement.</p>"
         }
         timeline.push(cognitive_flexibility)
 
@@ -189,13 +189,46 @@
         var self_rated_artistic_skill = {
             type: jsPsychHtmlButtonResponse,
             choices: Array.from({ length: 5 }, (_, i) => i + 1).map(String),
-            questions: [
-                {prompt: "<p>Please rate your drawing skill on a scale from 1 to 5, where 1 indicates “limited skills” and 5 indicates “expert level ability.”</p><p>Consider your ability to sketch, draw perspectives, and use colors effectively in your artworks.</p>"}
-            ],
+            prompt: "<p>Please rate your drawing skill on a scale from 1 to 5, where 1 indicates “limited skills” and 5 indicates “expert level ability.”</p><p>Consider your ability to sketch, draw perspectives, and use colors effectively in your artworks.</p>"
         }
         timeline.push(self_rated_artistic_skill)
 
         // Demographic information
+        var age = {
+            type: jsPsychSurveyText,
+            questions: [
+                {prompt: 'Please enter your age in years.'}
+            ]
+        }
+
+        var gender = {
+            type: jsPsychSurveyMultiChoice,
+            questions: [
+                {
+                prompt: "Please select the gender you most identify with.",  
+                options: ['Male', 'Female', 'Non-binary'], 
+                required: true
+                }, 
+            ],
+        };
+
+        var education_level = {
+            type: jsPsychSurveyMultiChoice,
+            questions: [
+                {
+                prompt: "Please select the highest level of education you have completed.",  
+                options: [
+                    'No high school diploma', 
+                    'High school graduate or equivalent',
+                    'Bachelor degree',
+                    'Graduate degree (Master, Doctorate)'
+                ], 
+                required: true
+                }, 
+            ],
+        };
+        
+        timeline.push([age, gender, education_level])
 
         // Complete the experiment
         var submit = {
