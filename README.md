@@ -34,4 +34,6 @@ Another potential workaround is to apply for and use a web server provided by Un
 - [Data Storage, Aggregation, and Manipulation (jsPsych documentation)](https://www.jspsych.org/7.0/overview/data/).
 
 ## To-do
-
+- Contact PI to upgrade to **TEAMS** accout
+- Add questionnaires for control variables (first need to determine what control variables)
+- Prepapare movei clips for two types of mood, and neural videos (also determine how to randomly assign mood induction conditions)
