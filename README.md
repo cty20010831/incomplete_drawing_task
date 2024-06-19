@@ -21,6 +21,11 @@ The following is the **directory layout** of this repo:
     ├── sample_output.json               # sample output data
     ├── sample_response.gif              # sample response using the website
 
+## Mood Induction Videos
+The three mood induction videos (for positive valence and high arousal, positive valence and low arousal, and neutral conditions) are stored in [Google Drive](https://drive.google.com/drive/u/0/folders/1TgkST_8BaKBVv45mN1DDP4-GMQafI4mG?ths=true). 
+
+These three videos will also be uploaded to Cognition.run after upgrading to the team account.
+
 ## Points of Concern
 One imporant point of concern right row is that, despite the covenience offered by **Cognition.run**, free-account users can only upload a video with size less than 2MB. This leads to potential issues for me to upload the videos used for mood induction, which is very likely to exceed the size limit. 
 
