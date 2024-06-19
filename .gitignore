@@ -9,3 +9,9 @@ public/jspsych/dist
 
 # Ignore practice html
 public/practice.html
+
+# Ignore three mood induction videos (since they are too large)
+# Instead directly upload them to Cognition.run (and also store them on Google Drive)
+public/videos/positive_valence_high_arousal.mp4
+public/videos/positive_valence_low_arousal.mp4
+public/videos/neutral.mp4
