@@ -37,8 +37,3 @@ One workaround is I can think of is utilizing serverless web application on [AWS
 Another potential workaround is to apply for and use a web server provided by University of Chicago that can run PHP (see this [link](https://websites.uchicago.edu/website-options/self-service/)), so that I can save each participant's data as a CSV or JSON file on the server. Some pontential resources to look for: 
 - [Saving jsPsych data to a web server using PHP](https://kywch.github.io/jsPsych-in-Qualtrics/save-php/);
 - [Data Storage, Aggregation, and Manipulation (jsPsych documentation)](https://www.jspsych.org/7.0/overview/data/).
-
-## To-do
-- Contact PI to upgrade to **TEAMS** accout
-- Add questionnaires for control variables (first need to determine what control variables)
-- Prepapare movei clips for two types of mood, and neural videos (also determine how to randomly assign mood induction conditions)
