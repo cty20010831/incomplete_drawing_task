@@ -28,12 +28,18 @@
         };
         timeline.push(consent);
 
+        // Randomly assign participants to the three mood induction conditions (with equal probablities)
+        var filmClips = [
+            'videos/positive_valence_high_arousal.mp4',
+            'videos/positive_valence_low_arousal.mp4',
+            'videos/neutral.mp4'
+        ];
+        var selectedClip = jsPsych.randomization.sampleWithReplacement(filmClips, 1)[0];
+        
         // Stream the movie used for mood induction
         var video = {
             type: jsPsychVideoKeyboardResponse,
-            stimulus: [
-                'videos/sample_video.mp4'
-            ],
+            stimulus: selectedClip,
             choices: "NO_KEYS",
             trial_ends_after_video: true
         };
