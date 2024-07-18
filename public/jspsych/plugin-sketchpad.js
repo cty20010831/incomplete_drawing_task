@@ -426,8 +426,18 @@ var jsPsychSketchpad = (function (jspsych) {
                   this.background_image = new Image();
                   this.background_image.src = this.params.background_image;
                   this.background_image.onload = () => {
-                      this.ctx.drawImage(this.background_image, 0, 0);
-                      resolve(true);
+                    // Define the padding value (leave some space between background image and canvas border)
+                    const padding = 100; 
+
+                    // Ensure the background image is drawn in a way that it scales and centers properly
+                    this.ctx.drawImage(
+                        this.background_image,
+                        padding, // x coordinate
+                        padding, // y coordinate
+                        this.sketchpad.width - 2 * padding, // width
+                        this.sketchpad.height - 2 * padding // height
+                    );
+                    resolve(true);
                   };
               }
               else {
@@ -487,27 +497,35 @@ var jsPsychSketchpad = (function (jspsych) {
           this.is_drawing = false;
       }
       render_drawing() {
-          this.ctx.clearRect(0, 0, this.sketchpad.width, this.sketchpad.height);
-          this.add_background_color();
-          if (this.background_image) {
-              this.ctx.drawImage(this.background_image, 0, 0);
-          }
-          for (const stroke of this.strokes) {
-              for (const m of stroke) {
-                  if (m.action == "start") {
-                      this.ctx.beginPath();
-                      this.ctx.moveTo(m.x, m.y);
-                      this.ctx.strokeStyle = m.color;
-                      this.ctx.lineJoin = "round";
-                      this.ctx.lineWidth = this.params.stroke_width;
-                  }
-                  if (m.action == "move") {
-                      this.ctx.lineTo(m.x, m.y);
-                      this.ctx.stroke();
-                  }
-              }
-          }
-      }
+        this.ctx.clearRect(0, 0, this.sketchpad.width, this.sketchpad.height);
+        this.add_background_color();
+        // Ensure the padding value is the same as in add_background_image
+        const padding = 100; 
+        if (this.background_image) {
+            this.ctx.drawImage(
+                this.background_image,
+                padding, // x coordinate
+                padding, // y coordinate
+                this.params.canvas_width - 2 * padding, // width
+                this.params.canvas_height - 2 * padding // height
+            );
+        }
+        for (const stroke of this.strokes) {
+            for (const m of stroke) {
+                if (m.action == "start") {
+                    this.ctx.beginPath();
+                    this.ctx.moveTo(m.x, m.y);
+                    this.ctx.strokeStyle = m.color;
+                    this.ctx.lineJoin = "round";
+                    this.ctx.lineWidth = this.params.stroke_width;
+                }
+                if (m.action == "move") {
+                    this.ctx.lineTo(m.x, m.y);
+                    this.ctx.stroke();
+                }
+            }
+        }
+    }
       undo() {
           this.undo_history.push(this.strokes.pop());
           this.set_redo_btn_state(true);
