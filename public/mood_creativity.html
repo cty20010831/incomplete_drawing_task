@@ -19,6 +19,14 @@
     <script>
         // Initialize jsPsych experiment with the defined timeline
         var timeline = [];
+        
+        // Preload stimuli to speed up stimuli displaying and playing
+        var preload = {
+            type: jsPsychPreload,
+            auto_preload: true, // automatically find stimuli to preload based the main experiment timeline
+            message: 'Please wait while the experiment loads. This may take a while.'
+        }
+        timeline.push(preload);
 
         // Provide informed consent
         var consent = {
@@ -34,12 +42,24 @@
             'videos/positive_valence_low_arousal.mp4',
             'videos/neutral.mp4'
         ];
-        var selectedClip = jsPsych.randomization.sampleWithReplacement(filmClips, 1)[0];
+
+        // Define a function to sample the three film clips with equal probability
+        // Don't know why the jsPsych.randomization.sampleWithReplacement does not work
+        function sample_film(arr, size) {
+            const samp = [];
+            for (let i = 0; i < size; i++) {
+                const rndIndex = Math.floor(Math.random() * arr.length);
+                samp.push(arr[rndIndex]);
+            }
+            return samp;
+        }
+
+        var selected_clip = sample_film(filmClips, 1);
         
         // Stream the movie used for mood induction
         var video = {
             type: jsPsychVideoKeyboardResponse,
-            stimulus: [selectedClip],
+            stimulus: selected_clip,
             choices: "NO_KEYS",
             trial_ends_after_video: true
         };
@@ -52,7 +72,6 @@
             choices: Array.from({ length: 9 }, (_, i) => i + 1).map(String),
             prompt: "<p>On a scale from 1 to 9, with 1 being 'Not at all aroused' and 9 being 'Extremely aroused,' how would you rate your current level of arousal?</p>"
         };
-        timeline.push(arousal)
         
         var valence = {
             type: jsPsychImageButtonResponse,
@@ -60,6 +79,7 @@
             choices: Array.from({ length: 9 }, (_, i) => String(i - 4)),
             prompt: "<p>On a scale from -4 to 4, with -4 being 'Very Unpleasant' and 4 being 'Very Pleasant,' how would you rate your emotional feeling?</p>"
         };
+        timeline.push(arousal, valence)
         
         // Complete the incompleteness shape task
         var drawing = {
@@ -245,9 +265,7 @@
         timeline.push(submit);
 
         var jsPsych = initJsPsych({
-            on_finish: function () {
-                jsPsych.data.displayData();
-            },
+            show_progress_bar: true,
             override_safe_mode: true
         });
 
