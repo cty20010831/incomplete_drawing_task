@@ -1,10 +1,10 @@
-# UChicago_MA_Thesis_Experiment
+# incomplete_drawing_task
 This repository stores the JsPsych code for setting up the experiment for my MA thesis at UChicago. It utilizes [**Cognition.run**](https://www.cognition.run/) to run the experiment and store participants' responses on the server provided by **Cognition.run** and further allows users to download the data in json format. 
 
 ## Hosting and Running the Experiment Website
 In order to stream the three large-size videos, I used the team account from Akram Bakkour's lab to clone this github repository to **Cognition.run**. 
 
-From the participants' side, they can participate in this experiment by clicking the [experiment website]() hosted by **Cognition.run** web server.
+From the participants' side, they can participate in this experiment by clicking the [experiment website](https://s9e279qf6f.cognition.run) hosted by **Cognition.run** web server.
 
 After participants have completed the experiment, their submitted response will be available on *incomplete_shape_drawing* task section on **Cognition.run** homepage (team account from Akram Bakkour's lab), allowing me to download json-format data (see the [example output data](sample_output.json)).
 
