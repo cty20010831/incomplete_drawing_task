@@ -10,4 +10,4 @@ jobs:
         id: deploy
         with:
           personal-access-token: ${{secrets.PERSONAL_ACCESS_TOKEN}}
-      - run: echo "The public link to the task is ${{ steps.deploy.outputs.link }}"
+      - run: echo "The public link to this task is ${{ steps.deploy.outputs.link }}"
