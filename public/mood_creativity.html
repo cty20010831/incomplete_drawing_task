@@ -6,10 +6,20 @@
         <script src="jspsych/jspsych.js"></script>
         <!-- Load jsPsych's standard CSS file -->
         <link href="jspsych/jspsych.css" rel="stylesheet">
+        <!-- Load jsPsych plugin for full-screen display -->
+        <script src="jspsych/plugin-fullscreen.js"></script>
         <!-- Load jsPsych plugin for HTML button response -->
         <script src="jspsych/plugin-html-button-response.js"></script>
+        <!-- Load jsPsych plugin that preloads experiment stimuli -->
+        <script src="jspsych/plugin-preload.js"></script>
         <!-- Load jsPsych plugin for an interactive canvas that the participant can draw on using their mouse or touchscreen -->
         <script src="jspsych/plugin-sketchpad.js"></script>
+        <!-- Load jsPsych plugin for displaying a set of <inputs> from a HTML string -->
+        <script src="jspsych/plugin-survey-html-form.js"></script>
+        <!-- Load jsPsych plugin for likert-scale questionnaires -->
+        <script src="jspsych/plugin-survey-likert.js"></script>
+        <!-- Load jsPsych plugin for multiple-choice questions -->
+        <script src="jspsych/plugin-survey-multi-choice.js"></script>
         <!-- Load jsPsych plugin for HTML keyboard response -->
         <script src="jspsych/plugin-survey-text.js"></script>
         <!-- Load jsPsych plugin for video keyboard response -->
@@ -20,22 +30,6 @@
         // Initialize jsPsych experiment with the defined timeline
         var timeline = [];
         
-        // Preload stimuli to speed up stimuli displaying and playing
-        var preload = {
-            type: jsPsychPreload,
-            auto_preload: true, // automatically find stimuli to preload based the main experiment timeline
-            message: 'Please wait while the experiment loads. This may take a while.'
-        }
-        timeline.push(preload);
-
-        // Provide informed consent
-        var consent = {
-            type: jsPsychHtmlButtonResponse,
-            stimulus: "<p>Welcome to the experiment. <br>Please read the following consent form and click Agree to participate.</p>",
-            choices: ['Agree']
-        };
-        timeline.push(consent);
-
         // Randomly assign participants to the three mood induction conditions (with equal probablities)
         var filmClips = [
             'videos/positive_valence_high_arousal.mp4',
@@ -55,31 +49,183 @@
         }
 
         var selected_clip = sample_film(filmClips, 1);
+
+        // Preload stimuli to speed up stimuli displaying and playing
+        var preload = {
+            type: jsPsychPreload,
+            // auto_preload: true, // automatically find stimuli to preload based the main experiment timeline
+            images: ['images/SAM_Arousal_1.png', 'images/SAM_Arousal_2.png',
+                    'images/SAM_Arousal_3.png', 'images/SAM_Arousal_4.png',
+                    'images/SAM_Arousal_5.png', 'images/SAM_Arousal_6.png',
+                    'images/SAM_Arousal_7.png', 'images/SAM_Arousal_8.png', 
+                    'images/SAM_Arousal_9.png', 'images/SAM_Valence_-1.png',
+                    'images/SAM_Valence_-2.png', 'images/SAM_Valence_-3.png',
+                    'images/SAM_Valence_-4.png', 'images/SAM_Valence_0.png',
+                    'images/SAM_Valence_1.png', 'images/SAM_Valence_2.png',
+                    'images/SAM_Valence_3.png', 'images/SAM_Valence_4.png',
+                    'images/Example_Incomplete_Shape.png'
+                ],
+            video: [selected_clip], 
+            message: 'Please be patient as the experiment stimuli load and do not refresh the page.'
+        }
+        timeline.push(preload);
+
+        // Introduce the overall study
+        var introduction = {
+        type: jsPsychFullscreen,
+        message: `
+            <strong>Welcome!</strong></p>
+            Thank you for choosing to participate in this study!
+            This study will take approximately 10 to 15 minutes.</p>
+            You will receive $7.50/hour compensation for your participation in this study.</p>
+            The study consists of multiple parts. Please read the instructions for each part carefully.</p>
+            <p><strong>Press "Continue" to enter full-screen mode to begin the study.</strong></p>
+            `,
+        fullscreen_mode: true
+        };
+        timeline.push(introduction);
+
+        // Instructions for watching the film clip
+        var video_part_instruction = {
+            type: jsPsychHtmlButtonResponse,
+            stimulus: `
+            <p> <strong style="font-size: 30px;">Instructions for Wactching the Clip</strong></p>
+            <ul style="text-align:left;">
+                <li> You will now watch a video clip that lasts approximately 2 to 3 minutes.</li>
+                <li> You do not need to memorize any details from the clips you will be watching.</li>
+                <li> Just immerse yourself in the clip as you would when watching a movie in a cinema. </li>
+                <li> <strong>Press "Continue" to move on to the task.</strong></li>
+            </ul>
+            `,
+            choices: ['Continue']
+        };
+        timeline.push(video_part_instruction)
         
         // Stream the movie used for mood induction
         var video = {
             type: jsPsychVideoKeyboardResponse,
             stimulus: selected_clip,
-            choices: "NO_KEYS",
-            trial_ends_after_video: true
+            height: 1000,
+            width: 1000,
+            trial_ends_after_video: true,
+            autoplay: true
         };
         timeline.push(video);
 
         // Check mood induction (arousal and valence)
-        var arousal = {
-            type: jsPsychImageButtonResponse,
-            stimulus: 'images/SAM_Arousal.png',
-            choices: Array.from({ length: 9 }, (_, i) => i + 1).map(String),
-            prompt: "<p>On a scale from 1 to 9, with 1 being 'Not at all aroused' and 9 being 'Extremely aroused,' how would you rate your current level of arousal?</p>"
+        // Check mood induction (arousal and valence)
+        var SAM_intro = {
+        type: jsPsychHtmlButtonResponse,
+        stimulus: `
+            <p style="text-align:left;"> You will now complete a two-question survey based on the previous video.</p>
+            <p style="text-align:left;"> <strong>Press "Continue" to move on to the task.</strong></p>
+            `,
+        choices: ['Continue']
+        }
+        timeline.push(SAM_intro);
+
+        var SAM_main = {
+        type: jsPsychSurveyHtmlForm,
+        preamble: '<p style="text-align:left;"> Rate how you feel about the clip you just watched. </p>',
+        html: '<p style="text-align:left;"> <b>Please rate how positively or negatively you feel after watching the clip.</b> </p>\
+        <div style="display:flex; justify-content: space-between;">\
+            <label style="display:flex; flex-direction:column; align-items:center;">\
+            <input name="valence" type="radio" value="-4" required/>\
+            <img src="images/SAM_Valence_-4.png" alt="-4" style="width:150px; height:150px;">\
+            </label>\
+            <label style="display:flex; flex-direction:column; align-items:center;">\
+            <input name="valence" type="radio" value="-3" required/>\
+            <img src="images/SAM_Valence_-3.png" alt="-3" style="width:20px; height:150px;">\
+            </label>\
+            <label style="display:flex; flex-direction:column; align-items:center;">\
+            <input name="valence" type="radio" value="-2" required/>\
+            <img src="images/SAM_Valence_-2.png" alt="-2" style="width:150px; height:150px;">\
+            </label>\
+            <label style="display:flex; flex-direction:column; align-items:center;">\
+            <input name="valence" type="radio" value="-1" required/>\
+            <img src="images/SAM_Valence_-1.png" alt="-1" style="width:20px; height:150px;">\
+            </label>\
+            <label style="display:flex; flex-direction:column; align-items:center;">\
+            <input name="valence" type="radio" value="0" required/>\
+            <img src="images/SAM_Valence_0.png" alt="0" style="width:150px; height:150px;">\
+            </label>\
+            <label style="display:flex; flex-direction:column; align-items:center;">\
+            <input name="valence" type="radio" value="1" required/>\
+            <img src="images/SAM_Valence_1.png" alt="1" style="width:20px; height:150px;">\
+            </label>\
+            <label style="display:flex; flex-direction:column; align-items:center;">\
+            <input name="valence" type="radio" value="2" required/>\
+            <img src="images/SAM_Valence_2.png" alt="2" style="width:150px; height:150px;">\
+            </label>\
+            <label style="display:flex; flex-direction:column; align-items:center;">\
+            <input name="valence" type="radio" value="3" required/>\
+            <img src="images/SAM_Valence_3.png" alt="3" style="width:20px; height:150px;">\
+            </label>\
+            <label style="display:flex; flex-direction:column; align-items:center;">\
+            <input name="valence" type="radio" value="4" required/>\
+            <img src="images/SAM_Valence_4.png" alt="4" style="width:150px; height:150px;">\
+            </label>\
+        </div>\
+        <p style="text-align:left;"> <b>Please rate how intensely you feel after watching the clip.</b> </p>\
+        <div style="display:flex; justify-content: space-between;">\
+            <label style="display:flex; flex-direction:column; align-items:center;">\
+            <input name="arousal" type="radio" value="1" required/>\
+            <img src="images/SAM_Arousal_1.png" alt="1" style="width:150px; height:150px;">\
+            </label>\
+            <label style="display:flex; flex-direction:column; align-items:center;">\
+            <input name="arousal" type="radio" value="2" required/>\
+            <img src="images/SAM_Arousal_2.png" alt="2" style="width:20px; height:150px;">\
+            </label>\
+            <label style="display:flex; flex-direction:column; align-items:center;">\
+            <input name="arousal" type="radio" value="3" required/>\
+            <img src="images/SAM_Arousal_3.png" alt="3" style="width:150px; height:150px;">\
+            </label>\
+            <label style="display:flex; flex-direction:column; align-items:center;">\
+            <input name="arousal" type="radio" value="4" required/>\
+            <img src="images/SAM_Arousal_4.png" alt="4" style="width:20px; height:150px;">\
+            </label>\
+            <label style="display:flex; flex-direction:column; align-items:center;">\
+            <input name="arousal" type="radio" value="5" required/>\
+            <img src="images/SAM_Arousal_5.png" alt="5" style="width:150px; height:150px;">\
+            </label>\
+            <label style="display:flex; flex-direction:column; align-items:center;">\
+            <input name="arousal" type="radio" value="6" required/>\
+            <img src="images/SAM_Arousal_6.png" alt="6" style="width:20px; height:150px;">\
+            </label>\
+            <label style="display:flex; flex-direction:column; align-items:center;">\
+            <input name="arousal" type="radio" value="7" required/>\
+            <img src="images/SAM_Arousal_7.png" alt="7" style="width:150px; height:150px;">\
+            </label>\
+            <label style="display:flex; flex-direction:column; align-items:center;">\
+            <input name="arousal" type="radio" value="8" required/>\
+            <img src="images/SAM_Arousal_8.png" alt="8" style="width:20px; height:150px;">\
+            </label>\
+            <label style="display:flex; flex-direction:column; align-items:center;">\
+            <input name="arousal" type="radio" value="9" required/>\
+            <img src="images/SAM_Arousal_9.png" alt="9" style="width:150px; height:150px;">\
+            </label>\
+        </div>\
+        <p>'
         };
-        
-        var valence = {
-            type: jsPsychImageButtonResponse,
-            stimulus: 'images/SAM_Valence.png',
-            choices: Array.from({ length: 9 }, (_, i) => String(i - 4)),
-            prompt: "<p>On a scale from -4 to 4, with -4 being 'Very Unpleasant' and 4 being 'Very Pleasant,' how would you rate your emotional feeling?</p>"
+        timeline.push(SAM_main);
+
+        // Instructions for the incompletness drawing task
+        var drawing_part_instruction = {
+            type: jsPsychHtmlButtonResponse,
+            stimulus: `
+            <p><strong style="font-size: 30px;">Instructions for the Drawing Task</strong></p>
+            <ul style="text-align:left;">
+                <li>You will now complete an incomplete drawing.</li>
+                <li>Use your imagination to finish the drawing in any way you like.</li>
+                <li>Take your time and be as creative as possible.</li>
+                <li>You are allowed to <em>redo</em>, <em>undo</em>, and <em>clear</em> your drawing before submitting the final product.</li>
+                <li>After finishing, you will be asked to label and describe your drawing.</li>
+                <li><strong>Press "Continue" to start the drawing task.</strong></li>
+            </ul>
+            `,
+            choices: ['Continue']
         };
-        timeline.push(arousal, valence)
+        timeline.push(drawing_part_instruction);
         
         // Complete the incompleteness shape task
         var drawing = {
@@ -99,7 +245,7 @@
                 var imageData = jsPsych.data.get().last(1).values()[0].png;
                 return `<img src="${imageData}"></img>`;
             },
-            questions: [{prompt: 'What label would you give for your drawing?'}]
+            questions: [{prompt: 'What label would you give for your drawing?', required: true}]
         }
         timeline.push(drawing_label);
 
@@ -111,7 +257,8 @@
                     prompt: "Tell us how did you approach the initial incomplete drawing and turn it into your completed piece:",
                     rows: 6,
                     columns: 40,
-                    name: 'narrative_response'
+                    name: 'narrative_response',
+                    required: true
                 }
             ],
             preamble: () => {
@@ -223,7 +370,7 @@
         var age = {
             type: jsPsychSurveyText,
             questions: [
-                {prompt: 'Please enter your age in years.'}
+                {prompt: 'Please enter your age in years.', required: true}
             ]
         }
 
@@ -256,11 +403,31 @@
         
         timeline.push(age, gender, education_level)
 
+        // Add a section for feedback (useful for pilot study)
+        var feedback = {
+        type: jsPsychSurveyText,
+        questions: [
+            {prompt: 'Do you have any questions or feedback regarding the experiment?',
+            name: 'feedback',
+            rows: 20,
+            columns: 40
+            }
+        ]
+        };
+        timeline.push(feedback);
+
         // Complete the experiment
         var submit = {
             type: jsPsychHtmlButtonResponse,
-            stimulus: "Thank you for participating. Click the button to complete the experiment.",
-            choices: ['Submit']
+            stimulus: `
+            <p>Thank you for participating in this experiment.</p>
+            <p>Press 'Submit' to finish the study.</p>
+            `,
+            choices: ['Submit'],
+            // Add a function that tells the participants that their data has been collected.
+            on_finish: function(data){
+            jsPsych.endExperiment('Your response has been recorded. You are safe to close the webpage.');
+        }
         };
         timeline.push(submit);
 
