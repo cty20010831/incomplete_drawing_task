@@ -113,7 +113,6 @@
         timeline.push(video);
 
         // Check mood induction (arousal and valence)
-        // Check mood induction (arousal and valence)
         var SAM_intro = {
         type: jsPsychHtmlButtonResponse,
         stimulus: `
@@ -123,6 +122,25 @@
         choices: ['Continue']
         }
         timeline.push(SAM_intro);
+
+        // Add a comprehension check to ensure participants understand that they need to reflect on their feelings immediately after watching the clip, and rate their current level of arousal and valence accordingly.
+        var SAM_instruction_check = {
+            type: jsPsychSurveyMultiChoice,
+            questions: [
+                {
+                    prompt: "What should you consider when rating your mood?",
+                    options: ["How you feel right now after the clip", "Memories of past events", "Random feelings"],
+                    correct_response: "How you feel right now after the clip",
+                    required: true
+                }
+            ],
+            on_finish: function(data){
+                if(data.response["Q0"] !== "How you feel right now after the clip"){
+                    alert("Please focus on how you feel immediately after watching the clip when rating your mood.");
+                }
+            }
+        };
+        timeline.push(SAM_instruction_check);
 
         var SAM_main = {
         type: jsPsychSurveyHtmlForm,
@@ -254,7 +272,8 @@
             type: jsPsychSurveyText,
             questions: [
                 {
-                    prompt: "Tell us how did you approach the initial incomplete drawing and turn it into your completed piece:",
+                    // prompt: "Tell us how did you approach the initial incomplete drawing and turn it into your completed piece:",
+                    prompt: "Please describe how you approached the incomplete shape and developed your drawing step-by-step. Start with your initial thoughts: What first came to mind when you saw the shape? Did it remind you of anything specific, or did you consider multiple ideas before deciding on one? If your idea evolved during the process, explain what triggered the change — was it the shape, your mood feeling, or an unexpected association? Think about the theme or category your drawing fits, such as nature, technology, people, animals, or abstract concepts. Did new themes emerge as you worked, and how did you decide which direction to follow?",
                     rows: 6,
                     columns: 40,
                     name: 'narrative_response',
