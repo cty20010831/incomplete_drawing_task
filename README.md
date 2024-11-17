@@ -14,7 +14,7 @@ The following is the **directory layout** of this repo:
     .
     ├── \.github/workflows               # deploy website via Cognition.run       
     ├── \public
-        ├── \images                      # folder to store incomplete shapes
+        ├── \images                      # folder to store incomplete shapes and SAM Arousal and Valence Images
         ├── \jspsych                     # folder to store jspsych css and javscript files, alongside plugins used in this study
         ├── \videos                      # folder to store videos for mood induction
         ├── public/mood_creativity.html  # html file of the experiment webpage
