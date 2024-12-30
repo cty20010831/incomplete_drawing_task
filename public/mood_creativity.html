@@ -498,20 +498,37 @@
 
         timeline.push(feedback);
 
+        // Generate a random completion code to approve the study (give HIT)
+        function generateRandomCode(length) {
+        var charset = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+        var code = "";
+        for (var i = 0; i < length; i++) {
+            var randomIndex = Math.floor(Math.random() * charset.length);
+            code += charset.charAt(randomIndex);
+        }
+        return code;
+        }
+
+        var code = generateRandomCode(5);
+
         // Complete the experiment
         var submit = {
             type: jsPsychHtmlButtonResponse,
             stimulus: `
             <p>Thank you for participating in this experiment.</p>
-            <p>Press 'Submit' to finish the study.</p>
+            <p><strong>Please screenshot or save your completion code</strong>.</p>
+            <p>Your completion code is: <b style="font-size: 24px; color: red;">${code}</b></p>
+            <p>After saving your code, press <strong>'Submit'</strong> to finish the study.</p>
             `,
             choices: ['Submit'],
-            // Add a function that tells the participants that their data has been collected.
-            on_finish: function(data){
-            jsPsych.endExperiment('Your response has been recorded. You are safe to close the webpage.');
-        }
         };
         timeline.push(submit);
+
+        var exit_fullscreen = {
+        type: jsPsychFullscreen,
+        fullscreen_mode: false
+        };
+        timeline.push(exit_fullscreen);
 
         var jsPsych = initJsPsych({
             show_progress_bar: true,
