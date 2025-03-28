@@ -12,16 +12,26 @@ After participants have completed the experiment, their submitted response will 
 The following is the **directory layout** of this repo:
 
     .
-    ├── \.github/workflows               # deploy website via Cognition.run       
+    ├── \.github/workflows                     # deploy website via Cognition.run       
     ├── \public
-        ├── \images                      # folder to store incomplete shapes and SAM Arousal and Valence Images
-        ├── \jspsych                     # folder to store jspsych css and javscript files, alongside plugins used in this study
-        ├── \videos                      # folder to store videos for mood induction
-        ├── public/mood_creativity.html  # html file of the experiment webpage
+        ├── \images                            # folder to store incomplete shapes and SAM Arousal and Valence Images
+        ├── \jspsych                           # folder to store jspsych css and javscript files, alongside plugins used in this study
+        ├── \videos                            # folder to store videos for mood induction
+        ├── public/mood_creativity.html        # html file of the experiment webpage
     ├── .gitignore
     ├── README.md
-    ├── sample_output.json               # sample output data
-    ├── sample_response.gif              # sample response using the website
+    ├── reshape_imcomplete_shape_stimuli.py    # python script to reshape incomplete shape stimuli images to the target size
+    ├── sample_output.json                     # sample output data
+    ├── sample_response.gif                    # sample response using the website
 
 ## Mood Induction Videos
 The three mood induction videos (for positive valence and high arousal, positive valence and low arousal, and neutral conditions) are stored in [Google Drive](https://drive.google.com/drive/u/0/folders/1TgkST_8BaKBVv45mN1DDP4-GMQafI4mG?ths=true). 
+
+## Resize the Incomplete Shape Stimuli
+In order to match the shapes of the incomplete shape stimuli (and also make them consistent) and that of the canvas size of jspsych sketchpad plugin. I used the python script `reshape_imcomplete_shape_stimuli.py` to resize the incomplete shape stimuli images.
+```bash
+python3 reshape_imcomplete_shape_stimuli.py
+```
+
+
+Adjust sample output and resonse later!!
