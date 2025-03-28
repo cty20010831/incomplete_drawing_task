@@ -317,6 +317,21 @@
         });
         
         // Control variables
+        // Ask participants to complete some questionnaires
+        var control_part_instruction = {
+        type: jsPsychHtmlButtonResponse,
+        stimulus: `
+        <p><strong style="font-size: 30px;">Instructions for Filling out Questionnaires</strong></p>
+        <ul style="text-align:left;">
+        <li>You will now be asked to complete several questionnaires.</li>
+        <li>Please read each statement carefully and choose the option that best represents your feelings or agreement.</li>
+        <li><strong>Press "Continue" to begin the questionnaires.</strong></li>
+        </ul>
+        `,
+        choices: ['Continue']
+        };
+        timeline.push(control_part_instruction);
+
         // Control variable 1: Trait affectivity (measurede by PANAS)
         var affectivity_likert_scale = [
             "Very slightly or not at all", 
