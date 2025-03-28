@@ -426,16 +426,13 @@ var jsPsychSketchpad = (function (jspsych) {
                   this.background_image = new Image();
                   this.background_image.src = this.params.background_image;
                   this.background_image.onload = () => {
-                    // Define the padding value (leave some space between background image and canvas border)
-                    const padding = 100; 
-
-                    // Ensure the background image is drawn in a way that it scales and centers properly
+                    // Make sure the background image fills the whole canvas
                     this.ctx.drawImage(
                         this.background_image,
-                        padding, // x coordinate
-                        padding, // y coordinate
-                        this.sketchpad.width - 2 * padding, // width
-                        this.sketchpad.height - 2 * padding // height
+                        0,
+                        0,
+                        this.sketchpad.width,
+                        this.sketchpad.height
                     );
                     resolve(true);
                   };
@@ -499,15 +496,14 @@ var jsPsychSketchpad = (function (jspsych) {
       render_drawing() {
         this.ctx.clearRect(0, 0, this.sketchpad.width, this.sketchpad.height);
         this.add_background_color();
-        // Ensure the padding value is the same as in add_background_image
-        const padding = 100; 
+         // Make sure the background image fills the whole canvas
         if (this.background_image) {
             this.ctx.drawImage(
                 this.background_image,
-                padding, // x coordinate
-                padding, // y coordinate
-                this.params.canvas_width - 2 * padding, // width
-                this.params.canvas_height - 2 * padding // height
+                0,
+                0,
+                this.params.canvas_width,
+                this.params.canvas_height
             );
         }
         for (const stroke of this.strokes) {
