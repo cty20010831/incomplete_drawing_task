@@ -37,18 +37,8 @@
             'videos/neutral.mp4'
         ];
 
-        // Define a function to sample the three film clips with equal probability
-        // Don't know why the jsPsych.randomization.sampleWithReplacement does not work
-        function sample_film(arr, size) {
-            const samp = [];
-            for (let i = 0; i < size; i++) {
-                const rndIndex = Math.floor(Math.random() * arr.length);
-                samp.push(arr[rndIndex]);
-            }
-            return samp;
-        }
-
-        var selected_clip = sample_film(filmClips, 1);
+        // Pick exactly one at random with 1/3 chance each
+        var selected_clip = [filmClips[Math.floor(Math.random() * filmClips.length)]];
 
         // Preload stimuli to speed up stimuli displaying and playing
         var preload = {
